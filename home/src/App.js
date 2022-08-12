@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Joke } from './Joke';
 import { Stories } from './Stories';
+import { Tasks } from './Tasks';
 
 export const App = () => {
 
@@ -26,10 +27,11 @@ export const App = () => {
                 <button onClick={searchQuery}>Search</button>
             </div>
             <hr />
+            <Tasks />
+            <hr />
             <Joke />
             <hr />
             <Stories />
-            <hr />
         </div>
     )
 }

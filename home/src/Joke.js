@@ -1,4 +1,4 @@
-import {useState, Useffect, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 
 export const Joke = () => {
 
