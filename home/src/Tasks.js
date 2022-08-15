@@ -1,18 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+
+const TASKS_STORAGE = {tasks: [], completedTask: [], removedTask: []};
 
 export const Tasks = () => {
 
     const [taskText, setTaskText] = useState('');
-    const [tasks, setTask] = useState(getLocalStorageItemByKey('task'));
+    const [tasks, setTask] = useState(getLocalStorageItemByKey('tasks'));
     const [completedTask, setCompletedTask] = useState(getLocalStorageItemByKey('completedTask'));
     const [removedTask, setremovedTask] = useState(getLocalStorageItemByKey('removedTask'));
+
+    useEffect(() => {
+        TASKS_STORAGE.tasks = tasks;
+        TASKS_STORAGE.completedTask = completedTask;
+        TASKS_STORAGE.removedTask = removedTask;
+        localStorage.setItem('TASKS_STORAGE', JSON.stringify(TASKS_STORAGE));
+    },[tasks, completedTask, removedTask])
     
     function getLocalStorageItemByKey (key) {
-        const retrievedJSON = JSON.parse(localStorage.getItem(key));
-        console.log('retrievedJSON', retrievedJSON);
-        return [];
-        // return retrievedJSON ? [] : retrievedJSON;
+        const retrievedJSON = JSON.parse(localStorage.getItem('TASKS_STORAGE'));
+        return retrievedJSON ? retrievedJSON[key] : [];
      }
 
     function updateTaskText(event) {
@@ -22,7 +29,6 @@ export const Tasks = () => {
     function addTask() {
         setTask([...tasks, {task: taskText, id: uuid()}]);
         setTaskText('');
-        localStorage.setItem('task', JSON.stringify(task));
     }
     
     function completeTask(t) {
@@ -31,7 +37,6 @@ export const Tasks = () => {
             setTask(tasks.filter((task) => {
                 return task.id !== t.id;
             }));
-            localStorage.setItem('completedTask', JSON.stringify(completedTask));
         }
     }
     
@@ -39,7 +44,6 @@ export const Tasks = () => {
         return () => {
             setCompletedTask(completedTask.filter(task => task.id !== t.id));
             setremovedTask([...removedTask, t]);
-            localStorage.setItem('removedTask', JSON.stringify(removedTask));
         }
     }
 
