@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Gallary } from './Gallery';
 import { Joke } from './Joke';
 import { Stories } from './Stories';
 import { Tasks } from './Tasks';
@@ -26,6 +27,8 @@ export const App = () => {
                 <input value={userQuery} onChange={updateUserQuery} onKeyPress={handleKeyPress}></input>
                 <button onClick={searchQuery}>Search</button>
             </div>
+            <hr />
+            <Gallary />
             <hr />
             <Tasks />
             <hr />
