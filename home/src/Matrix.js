@@ -5,11 +5,13 @@ export const MatrixEffect = () => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
-      setIndex((currentIndex) => {
-        return (currentIndex + 1) % matrix.length;
-      });
+    const interval = setInterval(() => {
+      setIndex((currentIndex) => (currentIndex + 1) % matrix.length);
     }, 16);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
   return <img src={matrix[index]} alt="Matrix"></img>;
 };
