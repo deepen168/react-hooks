@@ -3,10 +3,11 @@ import { Gallery } from "./Gallery";
 import { Joke } from "./Joke";
 import { Stories } from "./Stories";
 import { Tasks } from "./Tasks";
+import { MatrixEffect } from "./Matrix";
 
 export const App = () => {
   const [userQuery, setUserQuery] = useState("");
-  const [showGallery, setSHowGallery] = useState(true);
+  const [showGallery, setSHowGallery] = useState(false);
 
   const updateUserQuery = (e) => setUserQuery(e.target.value);
 
@@ -35,6 +36,8 @@ export const App = () => {
         ></input>
         <button onClick={searchQuery}>Search</button>
       </div>
+      <hr />
+      <MatrixEffect />
       <hr />
       <div>{showGallery ? <Gallery /> : null}</div>
       <button onClick={toggleGallary}>
