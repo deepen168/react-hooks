@@ -7,7 +7,7 @@ import { MatrixEffect } from "./Matrix";
 
 export const App = () => {
   const [userQuery, setUserQuery] = useState("");
-  const [showGallery, setSHowGallery] = useState(false);
+  const [showGallery, setSHowGallery] = useState(true);
 
   const updateUserQuery = (e) => setUserQuery(e.target.value);
 
