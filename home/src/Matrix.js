@@ -1,17 +1,34 @@
 import { useEffect, useState } from "react";
 import matrix from "./data/matrix";
+import { dynamicAnimationEffect } from "./hooks";
 
 export const MatrixEffect = () => {
-  const [index, setIndex] = useState(0);
+  const [delay, setDelay] = useState(16)
+  const [intervalFrame, setIntervalFrame] = useState(1);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((currentIndex) => (currentIndex + 1) % matrix.length);
-    }, 16);
+  const MINIMUMDELAY = 16;
+  const MINIMUMINTERVAL = 1;
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-  return <img src={matrix[index]} alt="Matrix"></img>;
+  const index = dynamicAnimationEffect({ intervalFrame, delay, length: matrix.length });
+
+  function handledelayChange(e) {
+    const newDelay = Number(e.target.value) > MINIMUMDELAY ? Number(e.target.value) : MINIMUMDELAY;
+    setDelay(newDelay);
+  }
+
+  function handleIntervalFrameChange(e) {
+    const newInterval = Number(e.target.value) > MINIMUMINTERVAL ? Number(e.target.value) : MINIMUMINTERVAL;
+    setIntervalFrame(newInterval);
+  }
+
+
+  return <div>
+    <img src={matrix[index]} alt="Matrix"></img>
+    <div className="multiForm">
+      please enter delay in miliseconds:
+      <input type="number" onChange={handledelayChange} ></input>
+      please enter interval:
+      <input type="number" onChange={handleIntervalFrameChange} ></input>
+    </div>
+  </div>
 };
